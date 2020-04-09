@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+<meta http-equiv='X-UA-Compatible' content='ie=edge'>
+<!-- Bootstrap CSS -->
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' crossorigin='anonymous'></script>
+<title>Wanimate</title>
+
+{% load static %}
+<style>
+    body, html {
+        height: 100%
+    }
+    .bg {
+        background-color: white;
+        height: 100%;
+        background-position: center;
+        background-repeat: repeat;
+        background-size: cover
+    }
+</style>
+</head>
+<body class="bg">
+    <main class="container-fluid">
+        <nav class="navbar navbar-light bg-dark mb-4">
+            <a class="navbar-brand" href="/">
+                <img src="{% static '/images/logo.png' %}" width="200" height="50" class="d-inline-block align-top" alt="">
+            </a>
+            <p class="text-white">Welcome {{ email }}</p>
+        </nav>
+        <div class="row mx-auto">
+            <div class="col-6">
+                <img src="{{vendor.logo}}" alt="vendor logo" style="width:200px;">
+                <hr>
+                <h5 class="font-weight-bold">Vendor: </h5>
+                <p>{{ vendor.name }}</p>
+                <h5 class="font-weight-bold">Details:</h5>
+                <p>{{ vendor.description }}</p>
+                <h5 class="font-weight-bold">Website:</h5> 
+                <a href="{{vendor.domain}}" target="_blank"><p>{{ vendor.domain }}</p></a>
+                <hr>
+                <a href="javascript:history.back()">Back to results</a>
+                
+            </div>
+            <div class="col-lg-6">
+                <h5 class="font-weight-bold"> Vendor Reviews: ({{ review_count }})</h5>
+                <hr>
+                {% for review in all_reviews %}
+                <p>User: {{review.fk_user.first_name}} {{review.fk_user.last_name }} | {{ review.fk_user.company_name }}</p>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                <p class="lead">{{ review.title }}</p>
+                <p>{{ review.text }}</p>
+                <hr>
+                {% endfor %}
+                
+                <h5>Add a Review</h5>
+                <form action="/add_review/{{vendor.id}}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="title">Title:</label>
+                        <input class="form-control" type="text" name="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="review">Review:</label>
+                        <textarea class="form-control" name="review" cols="30" rows="3"></textarea>
+                    </div>
+                    <button class="btn btn-success btn-sm" type="submit">Add Review</button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+    
+</body>
+</html>

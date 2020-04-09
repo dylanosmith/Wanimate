@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+<meta http-equiv='X-UA-Compatible' content='ie=edge'>
+<!-- Bootstrap CSS -->
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' crossorigin='anonymous'></script>
+<title>Wanimate Login</title>
+
+{% load static %}
+<style>
+    bbody, html {
+        height: 100%
+    }
+    .bg {
+        background-image: url("{% static '/images/bg.jpg' %}");
+        height: 100%;
+        background-position: center;
+        background-repeat: repeat;
+        background-size: cover;
+    }
+
+</style>
+</head>
+<body class="bg">
+    <main class="container-fluid rounded">
+        <nav class="navbar navbar-light bg-dark mb-5">
+            <a class="navbar-brand" href="/">
+                <img src="{% static '/images/logo.png' %}" width="200" height="50" class="d-inline-block align-top" alt="">
+            </a>
+        </nav>
+        <div class="row w-75 mx-auto">
+            <div class="col-lg-4 col-md-4 col-sm-12 bg-info p-2">
+                <h1 class="text-white text-center ">Welcome Back!</h1>
+                <p class="text-white text-center">To keep conneted with us please login with your personal info</p>
+                <button class="d-block mx-auto btn btn-outline-light btn-lg" data-toggle="modal" data-target="#signInModal">Sign in</button>
+                <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="signInModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="signInModalLabel">Please Sign In:</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body bg-dark text-white">
+                            <img class="col-5 d-block mx-auto" src="{% static '/images/logo.png' %}" alt="">
+                            <form action="/login/login_validation" method="POST">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="email">Email:</label>
+                                    <input class="form-control" type="text" name="email" placeholder="johnsmith@gmail.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password:</label>
+                                    <input class="form-control" type="password" name="password" placeholder="Password">
+                                </div>
+                                <button type="submit" class="btn btn-primary d-block mx-auto">Login</button>
+                            </form>
+                          
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12 bg-white">
+                <h1 class="text-center text-info">Create Account</h1>
+                <p class="text-center"> please register below</p>
+                {% if messages %}
+                    {% for message in messages%}
+                     <p style="color:red">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+                <form action="/login/createUser" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group"> 
+                        <label for="fname">First Name:</label>
+                        <input class="form-control" type="text" name="fname" placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label for="lname">Last Name:</label>
+                        <input class="form-control" type="text" name="lname" placeholder="Smith">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input class="form-control" type="text" name="email" placeholder="johnsmith@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="company_name">Company Name:</label>
+                        <input class="form-control" type="text" name="company_name" placeholder="Coding Dojo">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input class="form-control" type="password" name="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="password_conf">Confirm Password:</label>
+                        <input class="form-control" type="password" name="password_conf" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-info d-block mx-auto"> sign up</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </main>
+</body>
+</html>

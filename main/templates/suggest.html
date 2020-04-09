@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+<meta http-equiv='X-UA-Compatible' content='ie=edge'>
+<!-- Bootstrap CSS -->
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' crossorigin='anonymous'></script>
+<title>Wanimate</title>
+
+{% load static %}
+<style>
+    body, html {
+        height: 100%
+    }
+    .bg {
+        background-color: white;
+        height: 100%;
+        background-position: center;
+        background-repeat: repeat;
+        background-size: cover
+    }
+
+</style>
+
+</head>
+<body class="bg">
+    <main class="container-fluid">
+        <nav class="navbar navbar-light bg-dark mb-4">
+            <a class="navbar-brand" href="/">
+                <img src="{% static '/images/logo.png' %}" width="200" height="50" class="d-inline-block align-top" alt="">
+            </a>
+            <p class="text-white">Welcome {{ email }}</p>
+        </nav>
+
+        <header>
+            <h1 class="bg-white text-dark">Here are the top solutions we recommend:</h1>
+        </header>
+        <div class="row w-75 mx-auto">
+            {% for vendor in vendors %}
+                {% if vendor.fk_match in matches %}
+                <div class="col-4">
+                    <div class="card">
+                        <img src="{{vendor.logo}}" class="card-img-top w-50 mx-auto" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{vendor.name}}</h5>
+                            <p class="card-text">{{vendor.description}}</p>
+                            <hr>
+                            <p class="card-text">Star Rating:</p>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <hr>
+                            <p class="card-text">Vendor page and reviews:</p>
+                            <a href="/vendor/{{vendor.id}}">11 Reviews</a>
+                            <hr>
+                            <a href="/quotes/{{vendor.id}}" class="btn btn-primary">Get Quote</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    
+    </main>
+
+</body>
+</html>
